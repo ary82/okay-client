@@ -1,13 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loginState,
-  logoutState,
-  setUser,
-} from "../features/user/userSlice.js";
-import Home from "./Home.jsx";
+import { loginState, setUser } from "../features/user/userSlice.js";
 import Logout from "./Logout.jsx";
+import { Link, Navigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setemail] = useState("");
@@ -28,13 +24,12 @@ export default function Login() {
         if (res.data.success) {
           dispatch(loginState());
           dispatch(setUser({ username: res.data.username }));
-        } else {
-          dispatch(logoutState());
         }
       })
       .catch((err) => console.log(err.response));
   };
 
+  // REMOVE AT PROD
   const loginCheck = (e) => {
     e.preventDefault();
     axios({
@@ -47,8 +42,9 @@ export default function Login() {
     })
       .catch((err) => err);
   };
+  // REMOVE OVER
   return (
-    user.value ? <Home /> : (
+    user.value ? <Navigate to={"/"} /> : (
       <div>
         {
           <form onSubmit={login}>
@@ -77,6 +73,9 @@ export default function Login() {
             <Logout />
           </form>
         }
+        <p>
+          Already have an account? <Link to="../signup">Signup</Link>
+        </p>
       </div>
     )
   );
