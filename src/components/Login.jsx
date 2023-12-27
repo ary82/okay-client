@@ -6,6 +6,8 @@ import {
   logoutState,
   setUser,
 } from "../features/user/userSlice.js";
+import Home from "./Home.jsx";
+import Logout from "./Logout.jsx";
 
 export default function Login() {
   const [email, setemail] = useState("");
@@ -21,15 +23,18 @@ export default function Login() {
       data: { email: email, password: password },
       withCredentials: true,
     })
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success) {
+          dispatch(loginState());
+          dispatch(setUser({ username: res.data.username }));
+        } else {
+          dispatch(logoutState());
+        }
+      })
       .catch((err) => console.log(err.response));
   };
 
-  function reducerTest() {
-    dispatch(loginState());
-    dispatch(setUser({ username: "ewfwen" }));
-    console.log(user);
-  }
   const loginCheck = (e) => {
     e.preventDefault();
     axios({
@@ -42,46 +47,37 @@ export default function Login() {
     })
       .catch((err) => err);
   };
-  const logout = (e) => {
-    e.preventDefault();
-    axios({
-      method: "post",
-      url: "http://localhost:3000/logout",
-      withCredentials: true,
-    }).then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-  };
   return (
-    <div>
-      {
-        <form onSubmit={login}>
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setemail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setpassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit">Login</button>
-          <button onClick={loginCheck}>Check</button>
-          <button onClick={logout}>logout</button>
-        </form>
-      }
-
-      <button onClick={reducerTest}>Reducer test</button>
-    </div>
+    user.value ? <Home /> : (
+      <div>
+        {
+          <form onSubmit={login}>
+            <div>
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setpassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit">Login</button>
+            <button onClick={loginCheck}>Check</button>
+            <Logout />
+          </form>
+        }
+      </div>
+    )
   );
 }
