@@ -11,10 +11,8 @@ export default function Chat({ to }) {
   const [socketMessages, setsocketMessages] = useState([]);
   const getConversation = () => {
     axios({
-      method: "post",
-      url: "http://localhost:3000/conversation",
-      data: { from: user.username, to: to },
-      withCredentials: true,
+      method: "get",
+      url: `http://localhost:3000/conversation/${user.username}/${to}`,
     })
       .then((res) => {
         setconversation(res.data);
@@ -23,10 +21,8 @@ export default function Chat({ to }) {
 
   const getRoom = () => {
     axios({
-      method: "post",
-      url: "http://localhost:3000/room",
-      data: { users: [user.username, to] },
-      withCredentials: true,
+      method: "get",
+      url: `http://localhost:3000/room/${user.username}/${to}`,
     }).then((res) => {
       setcurrentRoom(res.data.users);
       socket.emit("join-room", res.data.users);
@@ -37,7 +33,7 @@ export default function Chat({ to }) {
     e.preventDefault();
     axios({
       method: "post",
-      url: "http://localhost:3000/message/send",
+      url: "http://localhost:3000/message",
       data: { from: user.username, to: to, message: message },
       withCredentials: true,
     })
@@ -53,6 +49,8 @@ export default function Chat({ to }) {
   };
   useEffect(() => {
     if (to != "") {
+      socket.disconnect();
+      socket.connect();
       getConversation();
       getRoom();
       socket.on("receive-message", (m) => {
