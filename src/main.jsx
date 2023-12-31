@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home.jsx";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import store from "./app/store";
+import store from "./helpers/store.js";
 import GetUser from "./components/GetUser.jsx";
 import { Provider } from "react-redux";
 

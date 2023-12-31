@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { socket } from "../socket";
+import { socket } from "../helpers/socket";
 
 export default function Chat({ to }) {
   const user = useSelector((state) => state.user);

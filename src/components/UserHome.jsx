@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Logout from "./Logout";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { socket } from "../socket";
+import { socket } from "../helpers/socket";
 import Chat from "./Chat";
 
 export default function UserHome() {

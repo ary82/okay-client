@@ -1,17 +1,13 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  loginState,
-  logoutState,
-  setUser,
-} from "../features/user/userSlice.js";
+import { useDispatch } from "react-redux";
+import { loginState, logoutState, setUser } from "../helpers/userSlice";
 
 export default function GetUser() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-     axios({
+    axios({
       method: "get",
       url: "http://localhost:3000/checkuser",
       withCredentials: true,
@@ -22,7 +18,6 @@ export default function GetUser() {
           dispatch(setUser({ username: res.data.username }));
         } else {
           dispatch(logoutState());
-          dispatch(setUser({ username: "" }));
         }
       })
       .catch((err) => console.log(err));
