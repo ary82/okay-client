@@ -8,11 +8,16 @@ import { Link, Navigate } from "react-router-dom";
 export default function Login() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const [bool, setbool] = useState(false);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const login = (e) => {
     e.preventDefault();
+    setbool(true);
+    setTimeout(() => {
+      setbool(false);
+    }, 1000);
     axios({
       method: "post",
       url: "http://localhost:3000/login",
@@ -68,7 +73,7 @@ export default function Login() {
                 required
               />
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" disabled={bool}>Login</button>
             <button onClick={loginCheck}>Check</button>
             <Logout />
           </form>

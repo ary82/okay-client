@@ -10,11 +10,16 @@ export default function Signup() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [confirmpass, setconfirmpass] = useState("");
+  const [bool, setbool] = useState(false);
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
 
   const formHandler = (e) => {
     e.preventDefault();
+    setbool(true);
+    setTimeout(() => {
+      setbool(false);
+    }, 1000);
     axios({
       method: "post",
       url: "http://localhost:3000/signup",
@@ -74,7 +79,7 @@ export default function Signup() {
               required
             />
           </div>
-          <button type="submit">Signup</button>
+          <button type="submit" disabled={bool}>Signup</button>
           <p>
             Already have an account? <Link to="../login">Login</Link>
           </p>

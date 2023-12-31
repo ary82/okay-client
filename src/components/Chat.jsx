@@ -9,6 +9,7 @@ export default function Chat({ to }) {
   const [message, setmessage] = useState("");
   const [currentRoom, setcurrentRoom] = useState("");
   const [socketMessages, setsocketMessages] = useState([]);
+  const [bool, setbool] = useState(false);
   const getConversation = () => {
     axios({
       method: "get",
@@ -31,6 +32,11 @@ export default function Chat({ to }) {
 
   const postMessage = (e) => {
     e.preventDefault();
+    setmessage("");
+    setbool(true);
+    setTimeout(() => {
+      setbool(false);
+    }, 1000);
     axios({
       method: "post",
       url: "http://localhost:3000/message",
@@ -87,7 +93,7 @@ export default function Chat({ to }) {
                 value={message}
                 onChange={(e) => setmessage(e.target.value)}
               />
-              <button type="submit">Send</button>
+              <button disabled={bool} type="submit">Send</button>
             </form>
           </div>
         )
