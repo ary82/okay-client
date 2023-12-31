@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Logout from "./Logout";
 import axios from "axios";
-import { io } from "socket.io-client";
 import { useSelector } from "react-redux";
+import { socket } from "../socket";
 import Chat from "./Chat";
 
 export default function UserHome() {
@@ -18,10 +18,6 @@ export default function UserHome() {
     })
       .catch((err) => console.log(err));
   };
-
-  const socket = io("http://localhost:3000", {
-    autoConnect: false,
-  });
 
   useEffect(() => {
     getUsernames();
@@ -39,8 +35,9 @@ export default function UserHome() {
           </li>
         ))}
       </ul>
-      <div>{currentChat}</div>
-      <Chat to={currentChat} />
+      <Chat
+        to={currentChat}
+      />
     </>
   );
 }

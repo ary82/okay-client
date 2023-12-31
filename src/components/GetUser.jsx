@@ -8,11 +8,10 @@ import {
 } from "../features/user/userSlice.js";
 
 export default function GetUser() {
-  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios({
+     axios({
       method: "get",
       url: "http://localhost:3000/checkuser",
       withCredentials: true,
