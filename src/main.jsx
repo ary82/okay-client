@@ -7,20 +7,12 @@ import Signup from "./components/Signup";
 import store from "./helpers/store.js";
 import GetUser from "./components/GetUser.jsx";
 import { Provider } from "react-redux";
+import "./index.css";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "signup",
-    element: <Signup />,
-  },
+  { path: "/", element: <Home /> },
+  { path: "login", element: <Login /> },
+  { path: "signup", element: <Signup /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
