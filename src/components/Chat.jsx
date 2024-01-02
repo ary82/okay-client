@@ -17,6 +17,7 @@ export default function Chat({ to }) {
     })
       .then((res) => {
         setconversation(res.data);
+        console.log(res.data);
       }).catch((err) => console.log(err));
   };
 
@@ -28,6 +29,25 @@ export default function Chat({ to }) {
       setcurrentRoom(res.data.users);
       socket.emit("join-room", res.data.users);
     }).catch((err) => console.log(err));
+  };
+
+  const postAImessage = () => {
+    axios({
+      method: "post",
+      url: "http://localhost:3000/ai",
+      data: { from: user.username, to: to },
+      withCredentials: true,
+    })
+      .then((res) => {
+        socket.emit("message", res.data.aiResponse, currentRoom);
+        console.log(res.data);
+        setsocketMessages([...socketMessages, {
+          from: res.data.newMessage.from,
+          message: res.data.aiResponse,
+          createdAt: res.data.newMessage.createdAt,
+        }]);
+      })
+      .catch((err) => console.log(err));
   };
 
   const postMessage = (e) => {
@@ -45,9 +65,11 @@ export default function Chat({ to }) {
     })
       .then((res) => {
         socket.emit("message", message, currentRoom);
+        console.log(res.data);
         setsocketMessages([...socketMessages, {
           from: res.data.from,
           message: res.data.message,
+          createdAt: res.data.createdAt,
         }]);
         console.log(socketMessages);
       })
@@ -64,6 +86,7 @@ export default function Chat({ to }) {
         setsocketMessages((oldsocketMessages) => [...oldsocketMessages, {
           from: to,
           message: m,
+          createdAt: (new Date()).toJSON(),
         }]);
         console.log(socketMessages);
       });
@@ -95,6 +118,9 @@ export default function Chat({ to }) {
               />
               <button disabled={bool} type="submit">Send</button>
             </form>
+            <button onClick={postAImessage}>
+              Send AI message
+            </button>
           </div>
         )
         : <h1>Select contact</h1>}
