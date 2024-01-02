@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { socket } from "../helpers/socket";
+import Message from "./Message";
 
 export default function Chat({ to }) {
   const user = useSelector((state) => state.user);
@@ -39,13 +40,7 @@ export default function Chat({ to }) {
       withCredentials: true,
     })
       .then((res) => {
-        socket.emit("message", res.data.aiResponse, currentRoom);
-        console.log(res.data);
-        setsocketMessages([...socketMessages, {
-          from: res.data.newMessage.from,
-          message: res.data.aiResponse,
-          createdAt: res.data.newMessage.createdAt,
-        }]);
+        setmessage(res.data);
       })
       .catch((err) => console.log(err));
   };
@@ -56,7 +51,7 @@ export default function Chat({ to }) {
     setbool(true);
     setTimeout(() => {
       setbool(false);
-    }, 1000);
+    }, 1500);
     axios({
       method: "post",
       url: "http://localhost:3000/message",
@@ -70,6 +65,7 @@ export default function Chat({ to }) {
           from: res.data.from,
           message: res.data.message,
           createdAt: res.data.createdAt,
+          id: crypto.randomUUID(),
         }]);
         console.log(socketMessages);
       })
@@ -81,16 +77,18 @@ export default function Chat({ to }) {
       socket.connect();
       getConversation();
       getRoom();
-      socket.on("receive-message", (m) => {
+      socket.on("receive-message", (m, id) => {
         console.log(m);
         setsocketMessages((oldsocketMessages) => [...oldsocketMessages, {
           from: to,
           message: m,
           createdAt: (new Date()).toJSON(),
+          id,
         }]);
         console.log(socketMessages);
       });
     }
+    return () => socket.off("receive-message");
   }, [to]);
   useEffect(() => {
     setsocketMessages([]);
@@ -99,31 +97,69 @@ export default function Chat({ to }) {
     <>
       {to
         ? (
-          <div>
-            <h2>{`username: ${user.username}`}</h2>
-            <h2>{`to: ${to}`}</h2>
-            {conversation.toReversed().map((chat) => (
-              <li key={chat._id}>{chat.from}: {chat.message}</li>
-            ))}
-            {socketMessages.map((m) => (
-              <li key={crypto.randomUUID()}>{m.from}: {m.message}</li>
-            ))}
-            <form onSubmit={postMessage}>
-              <input
-                type="string"
-                name="message"
-                id="message"
-                value={message}
-                onChange={(e) => setmessage(e.target.value)}
-              />
-              <button disabled={bool} type="submit">Send</button>
-            </form>
-            <button onClick={postAImessage}>
-              Send AI message
-            </button>
+          <div className="grow basis-3/4 bg-slate-900 overflow-y-auto ">
+            <ul className="flex flex-col gap-4 p-4 pb-20">
+              {conversation.toReversed().map((chat, index, convo) => (
+                <li
+                  className="relative flex flex-col"
+                  key={chat._id}
+                >
+                  <Message
+                    chat={chat}
+                    index={index}
+                    convo={convo}
+                    isSocket={false}
+                  />
+                </li>
+              ))}
+              {socketMessages.map((m, index, convo) => (
+                <li
+                  className="relative flex flex-col"
+                  key={crypto.randomUUID()}
+                >
+                  <Message
+                    chat={m}
+                    index={index}
+                    convo={convo}
+                    isSocket={true}
+                  />
+                </li>
+              ))}
+            </ul>
+            <div className="fixed bottom-0 flex flex-col bg-gray-950 w-3/4 border-y border-slate-700">
+              <form
+                className="flex items-center bg-slate-900 divide-x"
+                onSubmit={postMessage}
+              >
+                <input
+                  type="text"
+                  rows="2"
+                  name="message"
+                  id="message"
+                  value={message}
+                  className={`bg-slate-800 flex-1 resize-none py-1 px-2 m-1 mr-0 rounded-s text-sm focus:outline-none ${
+                    bool && "bg-gray-900 text-gray-600"
+                  }`}
+                  onChange={(e) => setmessage(e.target.value)}
+                />
+                <button
+                  className="text-lg font-urbanist px-2 bg-slate-800 disabled:bg-gray-900 disabled:text-gray-600"
+                  disabled={bool}
+                  type="submit"
+                >
+                  {">"}
+                </button>
+              </form>
+              <button
+                className="font-urbanist font-xl p-1"
+                onClick={postAImessage}
+              >
+                Generate with AI
+              </button>
+            </div>
           </div>
         )
-        : <h1>Select contact</h1>}
+        : <h1 className="grow basis-3/4">Select contact</h1>}
     </>
   );
 }

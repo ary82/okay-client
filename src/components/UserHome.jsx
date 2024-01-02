@@ -26,18 +26,30 @@ export default function UserHome() {
 
   return (
     <>
-      <div>UserHome</div>
-      <Logout />
-      <ul>
-        {users.filter((i) => i.username != user.username).map((user) => (
-          <li onClick={() => setcurrentChat(user.username)} key={user._id}>
-            {user.username}
-          </li>
-        ))}
-      </ul>
-      <Chat
-        to={currentChat}
-      />
+      <div className="flex justify-between items-center p-2 bg-gray-950 ">
+        <h2 className="font-urbanist bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-300 text-xl">
+          chat.okay
+        </h2>
+        <Logout className="bg-black" />
+      </div>
+      <div className="flex grow overflow-y-auto">
+        <ul className="flex flex-col bg-slate-800 basis-1/4">
+          {users.filter((i) => i.username != user.username).map((user) => (
+            <li
+              className={`p-3 text-white border-b-2 border-slate-900 cursor-pointer ${
+                currentChat == user.username && "bg-slate-700"
+              }`}
+              onClick={() => setcurrentChat(user.username)}
+              key={user._id}
+            >
+              {user.username}
+            </li>
+          ))}
+        </ul>
+        <Chat
+          to={currentChat}
+        />
+      </div>
     </>
   );
 }
