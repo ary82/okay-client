@@ -36,7 +36,7 @@ export default function UserHome() {
         <ul className="flex flex-col bg-slate-800 basis-1/4">
           {users.filter((i) => i.username != user.username).map((user) => (
             <li
-              className={`p-3 text-white border-b-2 border-slate-900 cursor-pointer ${
+              className={`break-words p-3 text-white border-b-2 border-slate-900 cursor-pointer ${
                 currentChat == user.username && "bg-slate-700"
               }`}
               onClick={() => setcurrentChat(user.username)}

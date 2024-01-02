@@ -59,7 +59,7 @@ export default function Chat({ to }) {
       withCredentials: true,
     })
       .then((res) => {
-        socket.emit("message", message, currentRoom);
+        socket.emit("message", message, currentRoom, user.username);
         console.log(res.data);
         setsocketMessages([...socketMessages, {
           from: res.data.from,
@@ -77,10 +77,10 @@ export default function Chat({ to }) {
       socket.connect();
       getConversation();
       getRoom();
-      socket.on("receive-message", (m, id) => {
+      socket.on("receive-message", (m, id, from) => {
         console.log(m);
         setsocketMessages((oldsocketMessages) => [...oldsocketMessages, {
-          from: to,
+          from,
           message: m,
           createdAt: (new Date()).toJSON(),
           id,
