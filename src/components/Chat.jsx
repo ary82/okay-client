@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { socket } from "../helpers/socket";
 import Message from "./Message";
 
 export default function Chat({ to }) {
   const user = useSelector((state) => state.user);
+  const refElement = useRef(null);
   const [conversation, setconversation] = useState([]);
   const [message, setmessage] = useState("");
   const [currentRoom, setcurrentRoom] = useState("");
@@ -55,11 +56,11 @@ export default function Chat({ to }) {
     axios({
       method: "post",
       url: "http://localhost:3000/message",
-      data: { from: user.username, to: to, message: message },
+      data: { from: user.username, to: to, message: message || "Ok" },
       withCredentials: true,
     })
       .then((res) => {
-        socket.emit("message", message, currentRoom, user.username);
+        socket.emit("message", message || "Ok", currentRoom, user.username);
         console.log(res.data);
         setsocketMessages([...socketMessages, {
           from: res.data.from,
@@ -71,6 +72,7 @@ export default function Chat({ to }) {
       })
       .catch((err) => console.log(err));
   };
+
   useEffect(() => {
     if (to != "") {
       socket.disconnect();
@@ -90,15 +92,21 @@ export default function Chat({ to }) {
     }
     return () => socket.off("receive-message");
   }, [to]);
+
   useEffect(() => {
     setsocketMessages([]);
   }, [currentRoom]);
+
+  // Scroll into view when messaging
+  useEffect(() => {
+    refElement.current.scrollIntoView({ behavior: "smooth" });
+  }, [conversation, socketMessages]);
   return (
     <>
       {to
         ? (
           <div className="grow basis-3/4 bg-slate-900 overflow-y-auto ">
-            <ul className="flex flex-col gap-4 p-4 pb-20">
+            <ul className="flex flex-col gap-4 p-4 pb-24">
               {conversation.toReversed().map((chat, index, convo) => (
                 <li
                   className="relative flex flex-col"
@@ -126,6 +134,7 @@ export default function Chat({ to }) {
                 </li>
               ))}
             </ul>
+            <div ref={refElement}></div>
             <div className="fixed bottom-0 flex flex-col bg-gray-950 w-3/4 border-y border-slate-700">
               <form
                 className="flex items-center bg-slate-900 divide-x"
