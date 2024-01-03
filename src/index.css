@@ -21,13 +21,12 @@ html {
 }
 body {
   color: white;
+  background-color: #1e293b;
 }
 #root {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
-  background-color: #1e293b;
 }
 .sent::before {
   content: "";
@@ -49,4 +48,28 @@ body {
   border: 12px solid;
   border-color: #1e293b transparent transparent #1e293b;
   border-radius: 3px;
+}
+
+h1 {
+  background: linear-gradient(
+    to right,
+    #d9f99d 0%,
+    #4ade80 16%,
+    #5eead4 33%,
+    #06b6d4 50%,
+    #93c5fd 66%,
+    #818cf8 83%,
+    #fef08a 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 6s ease-in-out infinite;
+}
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
 }
