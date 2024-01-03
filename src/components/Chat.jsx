@@ -157,8 +157,9 @@ export default function Chat({ to }) {
                 </button>
               </form>
               <button
-                className="font-urbanist font-xl p-1"
+                className="font-urbanist font-xl p-1 disabled:bg-gray-900 disabled:text-gray-600"
                 onClick={postAImessage}
+                disabled={bool}
               >
                 Generate with AI
               </button>
