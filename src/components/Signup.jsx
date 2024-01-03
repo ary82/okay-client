@@ -9,6 +9,7 @@ export default function Signup() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [bool, setbool] = useState(false);
+  const [error, seterror] = useState("");
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
 
@@ -17,8 +18,9 @@ export default function Signup() {
     setbool(true);
     axios({
       method: "post",
-      url: "http://localhost:3000/signup",
+      url: "https://okaychat.adaptable.app/signup",
       data: { username: username, email: email, password: password },
+      withCredentials: true,
     })
       .then((res) => {
         setbool(false);
@@ -28,7 +30,8 @@ export default function Signup() {
       })
       .catch((err) => {
         setbool(false);
-        console.log(err);
+        console.log(err.response);
+        seterror(err.response?.data?.messge);
       });
   };
   return (
@@ -76,6 +79,11 @@ export default function Signup() {
                 required
               />
             </div>
+            {error && (
+              <p className="text-center -m-2 text-red-400 font-bold">
+                {error}
+              </p>
+            )}
             <button
               className="font-urbanist bg-slate-800 w-1/3 self-center rounded-lg text-lg disabled:bg-gray-900 disabled:text-gray-600 hover:scale-110 hover:transition-transform"
               type="submit"

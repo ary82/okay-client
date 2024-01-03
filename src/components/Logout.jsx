@@ -10,7 +10,7 @@ export default function Logout() {
     e.preventDefault();
     axios({
       method: "post",
-      url: "http://localhost:3000/logout",
+      url: "https://okaychat.adaptable.app/logout",
       withCredentials: true,
     }).then((res) => {
       if (res.data.wasLoggedIn) {

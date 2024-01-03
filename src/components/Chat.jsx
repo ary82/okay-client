@@ -15,7 +15,7 @@ export default function Chat({ to }) {
   const getConversation = () => {
     axios({
       method: "get",
-      url: `http://localhost:3000/conversation/${user.username}/${to}`,
+      url: `https://okaychat.adaptable.app/conversation/${user.username}/${to}`,
     })
       .then((res) => {
         setconversation(res.data);
@@ -25,7 +25,7 @@ export default function Chat({ to }) {
   const getRoom = () => {
     axios({
       method: "get",
-      url: `http://localhost:3000/room/${user.username}/${to}`,
+      url: `https://okaychat.adaptable.app/room/${user.username}/${to}`,
     }).then((res) => {
       setcurrentRoom(res.data.users);
       socket.emit("join-room", res.data.users);
@@ -36,7 +36,7 @@ export default function Chat({ to }) {
     setbool(true);
     axios({
       method: "post",
-      url: "http://localhost:3000/ai",
+      url: "https://okaychat.adaptable.app/ai",
       data: { from: user.username, to: to },
       withCredentials: true,
     })
@@ -56,7 +56,7 @@ export default function Chat({ to }) {
     setbool(true);
     axios({
       method: "post",
-      url: "http://localhost:3000/message",
+      url: "https://okaychat.adaptable.app/message",
       data: { from: user.username, to: to, message: message || "Ok" },
       withCredentials: true,
     })
@@ -171,7 +171,7 @@ export default function Chat({ to }) {
               Click a contact to start chatting!
             </h2>
             <div className="p-4 max-w-prose">
-              Harness the capabilities of Google's Gemini API. By clicking
+              Harness the capabilities of Google's Gemini API. By clicking{" "}
               <h1 className="inline font-urbanist text-lg">Generate with AI</h1>
               , you trigger this advanced language model to generate a tailored
               message based on your conversation's last five messages.

@@ -12,7 +12,7 @@ export default function UserHome() {
   const getUsernames = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/users",
+      url: "https://okaychat.adaptable.app/users",
     }).then((res) => {
       setusers(res.data);
     })
