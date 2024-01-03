@@ -34,6 +34,7 @@ export default function Chat({ to }) {
   };
 
   const postAImessage = () => {
+    setbool(true);
     axios({
       method: "post",
       url: "http://localhost:3000/ai",
@@ -42,6 +43,7 @@ export default function Chat({ to }) {
     })
       .then((res) => {
         setmessage(res.data);
+        setbool(false);
       })
       .catch((err) => console.log(err));
   };
@@ -50,9 +52,6 @@ export default function Chat({ to }) {
     e.preventDefault();
     setmessage("");
     setbool(true);
-    setTimeout(() => {
-      setbool(false);
-    }, 1500);
     axios({
       method: "post",
       url: "http://localhost:3000/message",
@@ -69,10 +68,10 @@ export default function Chat({ to }) {
           id: crypto.randomUUID(),
         }]);
         console.log(socketMessages);
+        setbool(false);
       })
       .catch((err) => console.log(err));
   };
-
   useEffect(() => {
     if (to != "") {
       socket.disconnect();
@@ -92,14 +91,11 @@ export default function Chat({ to }) {
     }
     return () => socket.off("receive-message");
   }, [to]);
-
   useEffect(() => {
     setsocketMessages([]);
   }, [currentRoom]);
-
-  // Scroll into view when messaging
   useEffect(() => {
-    refElement.current.scrollIntoView({ behavior: "smooth" });
+    refElement.current?.scrollIntoView({ behavior: "smooth" });
   }, [conversation, socketMessages]);
   return (
     <>
@@ -168,7 +164,23 @@ export default function Chat({ to }) {
             </div>
           </div>
         )
-        : <h1 className="grow basis-3/4">Select contact</h1>}
+        : (
+          <div className="flex flex-col items-center grow basis-3/4 bg-slate-900 overflow-y-auto ">
+            <h2 className="font-urbanist text-2xl p-4 max-w-prose text-center gap-4">
+              Click a contact to start chatting!
+            </h2>
+            <div className="p-4 max-w-prose">
+              Harness the capabilities of Google's Gemini API. By clicking
+              <h1 className="inline font-urbanist text-lg"> Generate with AI</h1>
+              , you trigger this advanced language model to generate a tailored
+              message based on your conversation's last five messages.
+            </div>
+            <div className="p-4 max-w-prose">
+              Pressing Enter with an empty message will automatically send the
+              text "Ok" instead of requiring you to type it manually!
+            </div>
+          </div>
+        )}
     </>
   );
 }
