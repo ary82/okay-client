@@ -8,12 +8,12 @@ export default function AnonHome() {
     <>
       <div className="flex justify-end bg-slate-900 gap-2 items-center p-2 font-urbanist text-xl">
         <Link to={"../signup"}>
-          <button className="bg-slate-800 text-white p-1 rounded-lg px-3 py-1">
+          <button className="bg-slate-800 text-white p-1 rounded-lg px-3 py-1 hover:scale-110 hover:transition-transform">
             signup
           </button>
         </Link>
         <Link to={"../login"}>
-          <button className="bg-slate-800 text-white p-1 rounded-lg px-3 py-1">
+          <button className="bg-slate-800 text-white p-1 rounded-lg px-3 py-1 hover:scale-110 hover:transition-transform">
             login
           </button>
         </Link>

@@ -111,10 +111,19 @@ export default function Login() {
             <p className="self-center">
               Don't have an account?{" "}
               <Link
-                className="font-urbanist text-lg"
+                className="font-urbanist text-lg hover:underline"
                 to="../signup"
               >
                 Signup
+              </Link>
+            </p>
+            <p className="self-center -mt-4">
+              Back to{" "}
+              <Link
+                className="font-urbanist text-lg hover:underline"
+                to="../"
+              >
+                Home
               </Link>
             </p>
           </form>

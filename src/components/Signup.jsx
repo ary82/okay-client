@@ -86,10 +86,19 @@ export default function Signup() {
             <p className="self-center">
               Already have an account?{" "}
               <Link
-                className="font-urbanist text-lg"
+                className="font-urbanist text-lg hover:underline"
                 to="../login"
               >
                 Login
+              </Link>
+            </p>
+            <p className="self-center -mt-4">
+              Back to{" "}
+              <Link
+                className="font-urbanist text-lg hover:underline"
+                to="../"
+              >
+                Home
               </Link>
             </p>
           </form>
