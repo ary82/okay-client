@@ -11,12 +11,12 @@ export default function Message({ chat, index, convo, isSocket }) {
             {(new Date(chat.createdAt)).toLocaleDateString()}
           </p>
         )
-        : index != convo.length - 1 &&
-          chat.createdAt.slice(0, 10) !=
-            convo[index + 1].createdAt.slice(0, 10) &&
+        : index >= 1 &&
+          ((new Date(chat.createdAt)).toLocaleDateString()) !=
+            ((new Date(convo[index - 1]?.createdAt)).toLocaleDateString()) &&
           (
             <p className="text-center -mt-4 p-2">
-              {(new Date(convo[index + 1].createdAt))
+              {(new Date(convo[index].createdAt))
                 .toLocaleDateString()}
             </p>
           )}
