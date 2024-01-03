@@ -17,7 +17,7 @@ export default function Login() {
     setbool(true);
     axios({
       method: "post",
-      url: "https://okaychat.adaptable.app/login",
+      url: "http://localhost:3000/login",
       data: { email: email, password: password },
       withCredentials: true,
     })
@@ -39,7 +39,7 @@ export default function Login() {
     setbool(true);
     axios({
       method: "post",
-      url: "https://okaychat.adaptable.app/login",
+      url: "http://localhost:3000/login",
       data: { email: "demo", password: "demo" },
       withCredentials: true,
     })

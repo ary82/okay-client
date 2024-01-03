@@ -9,7 +9,7 @@ export default function GetUser() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://okaychat.adaptable.app/checkuser",
+      url: "http://localhost:3000/checkuser",
       withCredentials: true,
     })
       .then((res) => {

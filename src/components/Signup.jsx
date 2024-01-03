@@ -18,7 +18,7 @@ export default function Signup() {
     setbool(true);
     axios({
       method: "post",
-      url: "https://okaychat.adaptable.app/signup",
+      url: "http://localhost:3000/signup",
       data: { username: username, email: email, password: password },
       withCredentials: true,
     })
