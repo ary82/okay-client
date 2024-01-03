@@ -16,7 +16,6 @@ export default function Logout() {
       if (res.data.wasLoggedIn) {
         dispatch(logoutState());
       }
-      console.log(res.data);
     })
       .catch((err) => console.log(err));
   };
@@ -24,7 +23,7 @@ export default function Logout() {
     <div className="flex bg-slate-800 rounded-lg items-center divide-x">
       <h2 className="font-urbanist px-3">{user.username}</h2>
       <button
-        className="font-urbanist p-1 px-3 py-1"
+        className="font-urbanist p-1 px-3 py-1 hover:rounded-r-lg hover:bg-slate-700 hover:transition-colors"
         onClick={logout}
       >
         logout

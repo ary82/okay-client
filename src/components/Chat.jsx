@@ -19,7 +19,6 @@ export default function Chat({ to }) {
     })
       .then((res) => {
         setconversation(res.data);
-        console.log(res.data);
       }).catch((err) => console.log(err));
   };
 
@@ -45,7 +44,10 @@ export default function Chat({ to }) {
         setmessage(res.data);
         setbool(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setbool(false);
+        console.log(err);
+      });
   };
 
   const postMessage = (e) => {
@@ -60,17 +62,18 @@ export default function Chat({ to }) {
     })
       .then((res) => {
         socket.emit("message", message || "Ok", currentRoom, user.username);
-        console.log(res.data);
         setsocketMessages([...socketMessages, {
           from: res.data.from,
           message: res.data.message,
           createdAt: res.data.createdAt,
           id: crypto.randomUUID(),
         }]);
-        console.log(socketMessages);
         setbool(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setbool(false);
+        console.log(err);
+      });
   };
   useEffect(() => {
     if (to != "") {
@@ -79,14 +82,12 @@ export default function Chat({ to }) {
       getConversation();
       getRoom();
       socket.on("receive-message", (m, id, from) => {
-        console.log(m);
         setsocketMessages((oldsocketMessages) => [...oldsocketMessages, {
           from,
           message: m,
           createdAt: (new Date()).toJSON(),
           id,
         }]);
-        console.log(socketMessages);
       });
     }
     return () => socket.off("receive-message");
@@ -171,7 +172,7 @@ export default function Chat({ to }) {
             </h2>
             <div className="p-4 max-w-prose">
               Harness the capabilities of Google's Gemini API. By clicking
-              <h1 className="inline font-urbanist text-lg"> Generate with AI</h1>
+              <h1 className="inline font-urbanist text-lg">Generate with AI</h1>
               , you trigger this advanced language model to generate a tailored
               message based on your conversation's last five messages.
             </div>

@@ -8,7 +8,6 @@ export default function Signup() {
   const [username, setusername] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  const [confirmpass, setconfirmpass] = useState("");
   const [bool, setbool] = useState(false);
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -16,21 +15,21 @@ export default function Signup() {
   const formHandler = (e) => {
     e.preventDefault();
     setbool(true);
-    setTimeout(() => {
-      setbool(false);
-    }, 1000);
     axios({
       method: "post",
       url: "http://localhost:3000/signup",
       data: { username: username, email: email, password: password },
     })
       .then((res) => {
+        setbool(false);
         if (res.status === 201) {
           navigate("/login");
-          console.log(res);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setbool(false);
+        console.log(err);
+      });
   };
   return (
     user.value
@@ -78,7 +77,7 @@ export default function Signup() {
               />
             </div>
             <button
-              className="font-urbanist bg-slate-800 w-1/3 self-center rounded-lg text-lg"
+              className="font-urbanist bg-slate-800 w-1/3 self-center rounded-lg text-lg disabled:bg-gray-900 disabled:text-gray-600 hover:scale-110 hover:transition-transform"
               type="submit"
               disabled={bool}
             >
@@ -87,7 +86,7 @@ export default function Signup() {
             <p className="self-center">
               Already have an account?{" "}
               <Link
-                className="font-urbanist text-lg hover:scale-150"
+                className="font-urbanist text-lg"
                 to="../login"
               >
                 Login

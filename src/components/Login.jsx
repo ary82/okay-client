@@ -94,14 +94,14 @@ export default function Login() {
               </p>
             )}
             <button
-              className="font-urbanist bg-slate-800 w-1/3 self-center rounded-lg text-lg"
+              className="font-urbanist bg-slate-800 w-1/2 self-center rounded-lg text-lg disabled:bg-gray-900 disabled:text-gray-600 hover:scale-110 hover:transition-transform"
               type="submit"
               disabled={bool}
             >
               Login
             </button>
             <button
-              className="font-urbanist bg-slate-800 w-1/3 self-center rounded-lg text-lg -mt-2"
+              className="font-urbanist bg-slate-800 w-1/2 self-center rounded-lg text-lg -mt-2 disabled:bg-gray-900 disabled:text-gray-600 hover:scale-110 hover:transition-transform"
               type="button"
               onClick={demoLogin}
               disabled={bool}
@@ -111,7 +111,7 @@ export default function Login() {
             <p className="self-center">
               Don't have an account?{" "}
               <Link
-                className="font-urbanist text-lg hover:scale-150"
+                className="font-urbanist text-lg"
                 to="../signup"
               >
                 Signup
