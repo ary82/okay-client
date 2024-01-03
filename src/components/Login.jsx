@@ -2,22 +2,19 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginState, setUser } from "../helpers/userSlice.js";
-import Logout from "./Logout.jsx";
 import { Link, Navigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [bool, setbool] = useState(false);
+  const [error, seterror] = useState("");
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const login = (e) => {
     e.preventDefault();
     setbool(true);
-    setTimeout(() => {
-      setbool(false);
-    }, 1000);
     axios({
       method: "post",
       url: "http://localhost:3000/login",
@@ -25,63 +22,103 @@ export default function Login() {
       withCredentials: true,
     })
       .then((res) => {
-        console.log(res.data);
+        setbool(false);
         if (res.data.success) {
           dispatch(loginState());
           dispatch(setUser({ username: res.data.username }));
         }
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {
+        setbool(false);
+        console.log(err.response);
+        seterror("Invalid email or password");
+      });
+  };
+  const demoLogin = (e) => {
+    e.preventDefault();
+    setbool(true);
+    axios({
+      method: "post",
+      url: "http://localhost:3000/login",
+      data: { email: "demo", password: "demo" },
+      withCredentials: true,
+    })
+      .then((res) => {
+        setbool(false);
+        if (res.data.success) {
+          dispatch(loginState());
+          dispatch(setUser({ username: res.data.username }));
+        }
+      })
+      .catch((err) => {
+        setbool(false);
+        console.log(err.response);
+      });
   };
 
-  // REMOVE AT PROD
-  const loginCheck = (e) => {
-    e.preventDefault();
-    axios({
-      method: "get",
-      url: "http://localhost:3000/checkuser",
-      withCredentials: true,
-    }).then((res) => {
-      console.log(res.data);
-      return res.data;
-    })
-      .catch((err) => err);
-  };
-  // REMOVE OVER
   return (
-    user.value ? <Navigate to={"/"} /> : (
-      <div>
-        {
-          <form onSubmit={login}>
-            <div>
-              <label htmlFor="email">Email:</label>
+    user.value
+      ? <Navigate to={"/"} />
+      : (
+        <div className="bg-slate-900 grow flex justify-center items-center">
+          <form
+            className="flex flex-col grow bg-gray-950 gap-4 m-4 p-4 max-w-md shadow-2xl rounded-lg"
+            onSubmit={login}
+          >
+            <h1 className="text-center text-3xl font-urbanist">okay.chat</h1>
+            <div className="grad-bg rounded-lg flex">
               <input
                 type="email"
                 id="email"
+                className="bg-slate-800 rounded-md px-2 py-1 grow focus:m-0.5 focus:outline-none"
+                placeholder="email address"
                 value={email}
                 onChange={(e) => setemail(e.target.value)}
                 required
               />
             </div>
-            <div>
-              <label htmlFor="password">Password:</label>
+            <div className="grad-bg rounded-lg flex">
               <input
                 type="password"
                 id="password"
                 value={password}
                 onChange={(e) => setpassword(e.target.value)}
+                className="bg-slate-800 rounded-md px-2 py-1 grow focus:m-0.5 focus:outline-none"
+                placeholder="password"
                 required
               />
             </div>
-            <button type="submit" disabled={bool}>Login</button>
-            <button onClick={loginCheck}>Check</button>
-            <Logout />
+            {error && (
+              <p className="text-center -m-2 text-red-400 font-bold">
+                {error}
+              </p>
+            )}
+            <button
+              className="font-urbanist bg-slate-800 w-1/3 self-center rounded-lg text-lg"
+              type="submit"
+              disabled={bool}
+            >
+              Login
+            </button>
+            <button
+              className="font-urbanist bg-slate-800 w-1/3 self-center rounded-lg text-lg -mt-2"
+              type="button"
+              onClick={demoLogin}
+              disabled={bool}
+            >
+              Demo Login
+            </button>
+            <p className="self-center">
+              Don't have an account?{" "}
+              <Link
+                className="font-urbanist text-lg hover:scale-150"
+                to="../signup"
+              >
+                Signup
+              </Link>
+            </p>
           </form>
-        }
-        <p>
-          Already have an account? <Link to="../signup">Signup</Link>
-        </p>
-      </div>
-    )
+        </div>
+      )
   );
 }

@@ -68,6 +68,34 @@ h1 {
   background-size: 200% auto;
   animation: shine 6s ease-in-out infinite;
 }
+.grad-bg {
+  background: linear-gradient(
+    to right,
+    #d9f99d 0%,
+    #4ade80 16%,
+    #5eead4 33%,
+    #06b6d4 50%,
+    #93c5fd 66%,
+    #818cf8 83%,
+    #fef08a 100%
+  );
+  background-size: 200% auto;
+  animation: shine 6s ease-in-out infinite;
+}
+.grad-focus:focus {
+  background: linear-gradient(
+    to right,
+    #d9f99d 0%,
+    #4ade80 16%,
+    #5eead4 33%,
+    #06b6d4 50%,
+    #93c5fd 66%,
+    #818cf8 83%,
+    #fef08a 100%
+  );
+  background-size: 200% auto;
+  animation: shine 6s ease-in-out infinite;
+}
 @keyframes shine {
   to {
     background-position: 200% center;

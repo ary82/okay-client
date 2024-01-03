@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-
 import Home from "./Home.jsx";
 
 export default function Signup() {
@@ -34,57 +33,68 @@ export default function Signup() {
       .catch((err) => console.log(err));
   };
   return (
-    user.value ? <Home /> : (
-      <div>
-        <form
-          onSubmit={formHandler}
-        >
-          <div>
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setusername(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setemail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setpassword(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="confirm-password">Confirm Password:</label>
-            <input
-              type="password"
-              id="confirm-password"
-              value={confirmpass}
-              onChange={(e) => setconfirmpass(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" disabled={bool}>Signup</button>
-          <p>
-            Already have an account? <Link to="../login">Login</Link>
-          </p>
-        </form>
-      </div>
-    )
+    user.value
+      ? <Home />
+      : (
+        <div className="bg-slate-900 grow flex justify-center items-center">
+          <form
+            className="flex flex-col grow bg-gray-950 gap-4 m-4 p-4 max-w-md shadow-2xl rounded-lg"
+            onSubmit={formHandler}
+          >
+            <h1 className="text-center text-3xl font-urbanist">okay.chat</h1>
+            <div className="grad-bg rounded-lg flex">
+              <input
+                type="text"
+                className="bg-slate-800 rounded-md px-2 py-1 grow focus:m-0.5 focus:outline-none"
+                minLength="4"
+                placeholder="display name"
+                id="username"
+                value={username}
+                onChange={(e) => setusername(e.target.value)}
+                required
+              />
+            </div>
+            <div className="grad-bg rounded-lg flex">
+              <input
+                type="email"
+                className="bg-slate-800 rounded-md px-2 py-1 grow focus:m-0.5 focus:outline-none"
+                placeholder="email address"
+                id="email"
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="grad-bg rounded-lg flex">
+              <input
+                type="password"
+                className="bg-slate-800 rounded-md px-2 py-1 grow focus:m-0.5 focus:outline-none"
+                placeholder="password"
+                minLength="4"
+                id="password"
+                value={password}
+                onChange={(e) => setpassword(e.target.value)}
+                required
+              />
+            </div>
+            <button
+              className="font-urbanist bg-slate-800 w-1/3 self-center rounded-lg text-lg"
+              type="submit"
+              disabled={bool}
+            >
+              Signup
+            </button>
+            <p className="self-center">
+              Already have an account?{" "}
+              <Link
+                className="font-urbanist text-lg hover:scale-150"
+                to="../login"
+              >
+                Login
+              </Link>
+            </p>
+          </form>
+        </div>
+      )
   );
 }
