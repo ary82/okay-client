@@ -31,7 +31,7 @@ export default function Login() {
       .catch((err) => {
         setbool(false);
         console.log(err.response);
-        seterror("Invalid email or password");
+        seterror(err.response?.data);
       });
   };
   const demoLogin = (e) => {
