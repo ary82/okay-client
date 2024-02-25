@@ -28,6 +28,15 @@ export default function AnonHome() {
           A Real-time public Direct Messaging webapp that lets you generate
           messages with the help of Google's Gemini API
         </p>
+        <p className="bg-slate-900 text-yellow-100 text-center -mt-6 p-4 max-w-prose m-auto">
+          **Note: You would need to host the Back End Yourself. See:{" "}
+          <a
+            href="https://github.com/ary82/okay-client"
+            className="text-blue-400"
+          >
+            Documentation
+          </a>
+        </p>
       </div>
       <h2 className="font-urbanist text-5xl text-center p-4">features</h2>
       <div className="p-4 flex flex-col gap-8  max-w-5xl mx-auto">
@@ -39,8 +48,7 @@ export default function AnonHome() {
           />
           <div className="p-1 max-w-prose m-auto flex-1 min-w-24">
             Effortlessly acknowledge messages with a single keystroke.{" "}
-            <h1 className="inline font-urbanist text-lg">Pressing Enter</h1>
-            {" "}
+            <h1 className="inline font-urbanist text-lg">Pressing Enter</h1>{" "}
             with an empty message will automatically send the text "Ok"!
           </div>
         </div>
