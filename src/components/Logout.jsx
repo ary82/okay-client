@@ -10,7 +10,7 @@ export default function Logout() {
     e.preventDefault();
     axios({
       method: "post",
-      url: "http://localhost:3000/logout",
+      url: "http://ec2-13-127-44-116.ap-south-1.compute.amazonaws.com:3000/logout",
       withCredentials: true,
     }).then((res) => {
       if (res.data.wasLoggedIn) {

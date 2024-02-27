@@ -18,7 +18,7 @@ export default function Signup() {
     setbool(true);
     axios({
       method: "post",
-      url: "http://localhost:3000/signup",
+      url: "http://ec2-13-127-44-116.ap-south-1.compute.amazonaws.com:3000/signup",
       data: { username: username, email: email, password: password },
       withCredentials: true,
     })

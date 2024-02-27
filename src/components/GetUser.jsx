@@ -9,7 +9,7 @@ export default function GetUser() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:3000/checkuser",
+      url: "http://ec2-13-127-44-116.ap-south-1.compute.amazonaws.com:3000/checkuser",
       withCredentials: true,
     })
       .then((res) => {
