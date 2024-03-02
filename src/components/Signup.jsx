@@ -18,7 +18,7 @@ export default function Signup() {
     setbool(true);
     axios({
       method: "post",
-      url: "http://localhost:3000/signup",
+      url: "https://okayapi.ary82.dev/signup",
       data: { username: username, email: email, password: password },
       withCredentials: true,
     })

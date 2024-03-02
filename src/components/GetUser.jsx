@@ -9,7 +9,7 @@ export default function GetUser() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:3000/checkuser",
+      url: "https://okayapi.ary82.dev/checkuser",
       withCredentials: true,
     })
       .then((res) => {

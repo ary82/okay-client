@@ -15,7 +15,7 @@ export default function Chat({ to }) {
   const getConversation = () => {
     axios({
       method: "get",
-      url: `http://localhost:3000/conversation/${user.username}/${to}`,
+      url: `https://okayapi.ary82.dev/conversation/${user.username}/${to}`,
     })
       .then((res) => {
         setconversation(res.data);
@@ -25,7 +25,7 @@ export default function Chat({ to }) {
   const getRoom = () => {
     axios({
       method: "get",
-      url: `http://localhost:3000/room/${user.username}/${to}`,
+      url: `https://okayapi.ary82.dev/room/${user.username}/${to}`,
     }).then((res) => {
       setcurrentRoom(res.data.users);
       socket.emit("join-room", res.data.users);
@@ -36,7 +36,7 @@ export default function Chat({ to }) {
     setbool(true);
     axios({
       method: "post",
-      url: "http://localhost:3000/ai",
+      url: "https://okayapi.ary82.dev/ai",
       data: { from: user.username, to: to },
       withCredentials: true,
     })
@@ -56,7 +56,7 @@ export default function Chat({ to }) {
     setbool(true);
     axios({
       method: "post",
-      url: "http://localhost:3000/message",
+      url: "https://okayapi.ary82.dev/message",
       data: { from: user.username, to: to, message: message || "Ok" },
       withCredentials: true,
     })
