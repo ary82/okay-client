@@ -12,7 +12,7 @@ export default function UserHome() {
   const getUsernames = () => {
     axios({
       method: "get",
-      url: "http://ec2-13-127-44-116.ap-south-1.compute.amazonaws.com:3000/users",
+      url: "https://okayapi.ary82.dev/users",
     }).then((res) => {
       setusers(res.data);
     })
