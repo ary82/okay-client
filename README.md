@@ -2,11 +2,18 @@
 
 A Public Messaging app with quirks, written in JavaScript.
 
+Hosted at: [https://okaychat.ary82.dev](https://okaychat.ary82.dev)
+
+This is the client repository of the project.
+
+See also: [Backend Repo](https://github.com/ary82/okay-api)
+
 ### Quirks
 
 <ul>
     <li>Effortlessly acknowledge messages with a single keystroke. Pressing Enter with an empty message will automatically send the text "Ok"!</li>
     <li>Click on <i>Generate with AI</i> to send an AI generated message based on the last five messages of your conversation</li>
+    <li>Supports Multiple Logins from same Account</li>
 </ul>
 
 ### Front-End
@@ -19,7 +26,7 @@ The Front end for this project is written in React, while utilising the features
     <li>TailwindCSS for Styling</li>
 </ul>
 
-Hosted at: [https://okaychat.vercel.app](https://okaychat.vercel.app)
+Repo link: [https://github.com/ary82/okay-client](https://github.com/ary82/okay-client)
 
 ### Back-End
 
@@ -32,29 +39,12 @@ The Back end For this project is written in JavaScript, while utilising:
     <li>PassportJS for implementing User Authentication</li>
 </ul>
 
-#### Note:
+Repo link: [https://github.com/ary82/okay-api](https://github.com/ary82/okay-api)
 
-The [Back End](https://github.com/ary82/okay-api) for this project is not hosted publicly and you would need to host it on your local machine or on a Cloud Yourself to use it. You can do so by:
+### Architecture/Hosting:
 
-```sh
-# Clone the repo and install dependencies
-git clone https://github.com/ary82/okay-api
-cd okay-api
-npm i
-```
+Here is a schematic representation of the project, showing the technologies and platforms used for hosting it:
 
-You would now need to setup the Env variables for this project. The following are the variables you would need to set up.
-
-```
-MONGO_URL = <Database_url>
-SECRET = <Random_string_for_sessions>
-GEMINI_KEY = <Gemini_API_key>
-```
-
-Now start the server by:
-
-```sh
-npm start
-```
-
-[https://okaychat.vercel.app](https://okaychat.vercel.app) would now be usable.
+<p align="center">
+    <img alt="representation of architecture of the web app" src="./graphviz/okaychat.svg">
+</p>
